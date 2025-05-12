@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class DrawerInteractable : XRGrabInteractable
 {
     [SerializeField] private Transform drawerTransform;
+    [SerializeField] private GameObject keyPointLight;
     [SerializeField] private XRSocketInteractor keySocket;
     [SerializeField] private bool isLocked;
     [SerializeField] private float drawerLimitZ = .9f;
@@ -39,6 +41,7 @@ public class DrawerInteractable : XRGrabInteractable
     private void OnDrawerUnlocked(SelectEnterEventArgs arg0)
     {
         isLocked = false;
+        keyPointLight.SetActive(false);
         Debug.Log("***Drawer unlocked ...");
     }
 
