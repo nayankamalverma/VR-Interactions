@@ -21,7 +21,6 @@ public class CombinationPanelController : MonoBehaviour
     private int[] inputValues;
     private int maxButtonPress;
     private int butttonPress;
-    private bool isReset;
     private const string unlockedText = "Unlocked";
     private const string uiLayerMask = "UI";
     private const string nothingLayerMask = "Nothing";
@@ -67,6 +66,7 @@ public class CombinationPanelController : MonoBehaviour
             eventController.LockDoor();
             lockedPanel.color = Color.red;
             infoText.text = startingText;
+            userInputText.text = "000";
             DisableLockAndResetButton();
             UnableNumericalInput();
             ResetInput();

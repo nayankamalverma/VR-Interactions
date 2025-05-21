@@ -1,13 +1,26 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class SimpleHindgeInteractable : XRSimpleInteractable
 {
-
+    [SerializeField] private Vector3 positionLimits; 
+    private Collider hingeCollider;
+    private Vector3 hingePostion;
+    private Rigidbody rb;
     private Transform grabHand;
     private bool isLocked;
+    private const string defaultLayer = "Default";
+    private const string grabLayer = "Grab";
 
-    protected override void OnEnable()
+    protected virtual void Start()
+    {
+        hingeCollider = GetComponent<Collider>();
+    }
+
+    protected virtual void OnEnable()
     {
         base.OnEnable();
         isLocked = true;
@@ -17,7 +30,7 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
     {
         if (grabHand != null)
         {
-            transform.LookAt(grabHand, transform.forward);
+            TrackHand();
         }
     }
 
@@ -34,6 +47,27 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
     {
         base.OnSelectExited(args);
         grabHand = null;
+        ChangeLayerMask(grabLayer);
+    }
+
+    private void TrackHand()
+    {
+        transform.LookAt(grabHand, transform.forward);
+        hingePostion = hingeCollider.bounds.center;
+        if (grabHand.position.x >= hingePostion.x + positionLimits.x ||
+            grabHand.position.x <= hingePostion.x - positionLimits.x ||
+            grabHand.position.y >= hingePostion.y + positionLimits.y ||
+            grabHand.position.y <= hingePostion.y - positionLimits.y ||
+            grabHand.position.z >= hingePostion.z + positionLimits.z ||
+            grabHand.position.z <= hingePostion.z - positionLimits.z)
+        {
+            ReleaseHinge();
+        }
+    }
+
+    protected void ReleaseHinge()
+    {
+        ChangeLayerMask(defaultLayer);
     }
 
 
@@ -46,5 +80,9 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
         isLocked = true;
     }
 
+    private void ChangeLayerMask(string layerMask)
+    {
+        interactionLayers = InteractionLayerMask.GetMask(layerMask);
+    }
 
 }
