@@ -1,11 +1,14 @@
 using System;
+using Assets.Scripts;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class CombinationPanelController : MonoBehaviour
 {
+    [SerializeField] private EventController eventController;
     [SerializeField] private TextMeshProUGUI userInputText;
     [SerializeField] private XRButtonInteractable[] comboButtons;
     [SerializeField] private XRButtonInteractable lockButton;
@@ -14,7 +17,7 @@ public class CombinationPanelController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI lockedText;
     [SerializeField] private TextMeshProUGUI infoText;
     [SerializeField] private int[] comboValue = new int[3];
-    
+
     private bool isLocked;
     private int[] inputValues;
     private int maxButtonPress;
@@ -62,6 +65,7 @@ public class CombinationPanelController : MonoBehaviour
         if (!isLocked)
         {
             isLocked = true;
+            eventController.OnDoorLock.Invoke();
             lockedPanel.color = Color.red;
             infoText.text = startingText;
             DisableLockAndResetButton();
@@ -125,6 +129,7 @@ public class CombinationPanelController : MonoBehaviour
     private void RightInput()
     {
         isLocked = false;
+        eventController.OnDoorUnlock!.Invoke();
         lockedPanel.color = Color.green;
         lockedText.text = unlockedText;
         DisableNumericalInput();
