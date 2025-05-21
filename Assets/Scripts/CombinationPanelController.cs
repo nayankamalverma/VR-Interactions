@@ -2,7 +2,6 @@ using System;
 using Assets.Scripts;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -22,7 +21,6 @@ public class CombinationPanelController : MonoBehaviour
     private int[] inputValues;
     private int maxButtonPress;
     private int butttonPress;
-    private bool isReset;
     private const string unlockedText = "Unlocked";
     private const string uiLayerMask = "UI";
     private const string nothingLayerMask = "Nothing";
@@ -65,9 +63,10 @@ public class CombinationPanelController : MonoBehaviour
         if (!isLocked)
         {
             isLocked = true;
-            eventController.OnDoorLock.Invoke();
+            eventController.LockDoor();
             lockedPanel.color = Color.red;
             infoText.text = startingText;
+            userInputText.text = "000";
             DisableLockAndResetButton();
             UnableNumericalInput();
             ResetInput();
@@ -129,7 +128,7 @@ public class CombinationPanelController : MonoBehaviour
     private void RightInput()
     {
         isLocked = false;
-        eventController.OnDoorUnlock!.Invoke();
+        eventController.UnlockDoor();
         lockedPanel.color = Color.green;
         lockedText.text = unlockedText;
         DisableNumericalInput();

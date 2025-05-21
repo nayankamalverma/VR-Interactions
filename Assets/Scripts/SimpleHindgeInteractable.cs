@@ -1,55 +1,88 @@
-using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class SimpleHindgeInteractable : XRSimpleInteractable
 {
-
-    [SerializeField] private EventController eventController;
+    [SerializeField] private Vector3 positionLimits; 
+    private Collider hingeCollider;
+    private Vector3 hingePostion;
+    private Rigidbody rb;
     private Transform grabHand;
-
     private bool isLocked;
+    private const string defaultLayer = "Default";
+    private const string grabLayer = "Grab";
 
-    private void OnEnable()
+    protected virtual void Start()
     {
-        isLocked = false;
-        eventController.OnDoorUnlock += OnDoorUnlock;
-        eventController.OnDoorLock += OnDoorLock;
+        hingeCollider = GetComponent<Collider>();
     }
 
+    protected virtual void OnEnable()
+    {
+        base.OnEnable();
+        isLocked = true;
+    }
 
     protected virtual void Update()
     {
         if (grabHand != null)
         {
-            transform.LookAt(grabHand, transform.forward);
+            TrackHand();
         }
     }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
-        base.OnSelectEntered(args);
-        grabHand = args.interactorObject.transform;
+        if(!isLocked)
+        {
+            base.OnSelectEntered(args);
+            grabHand = args.interactorObject.transform;
+        }
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
         base.OnSelectExited(args);
         grabHand = null;
+        ChangeLayerMask(grabLayer);
     }
 
-    private void OnDoorUnlock()
+    private void TrackHand()
+    {
+        transform.LookAt(grabHand, transform.forward);
+        hingePostion = hingeCollider.bounds.center;
+        if (grabHand.position.x >= hingePostion.x + positionLimits.x ||
+            grabHand.position.x <= hingePostion.x - positionLimits.x ||
+            grabHand.position.y >= hingePostion.y + positionLimits.y ||
+            grabHand.position.y <= hingePostion.y - positionLimits.y ||
+            grabHand.position.z >= hingePostion.z + positionLimits.z ||
+            grabHand.position.z <= hingePostion.z - positionLimits.z)
+        {
+            ReleaseHinge();
+        }
+    }
+
+    protected void ReleaseHinge()
+    {
+        ChangeLayerMask(defaultLayer);
+    }
+
+
+    protected void OnDoorUnlock()
     {
         isLocked = false;
     }
-    private void OnDoorLock()
+    protected void OnDoorLock()
     {
         isLocked = true;
     }
 
-    private void OnDisable()
+    private void ChangeLayerMask(string layerMask)
     {
-        eventController.OnDoorUnlock -= OnDoorUnlock;
-        eventController.OnDoorLock -= OnDoorLock;
+        interactionLayers = InteractionLayerMask.GetMask(layerMask);
     }
+
 }
