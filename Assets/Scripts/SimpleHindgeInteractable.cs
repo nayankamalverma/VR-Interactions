@@ -1,22 +1,17 @@
-using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class SimpleHindgeInteractable : XRSimpleInteractable
 {
 
-    [SerializeField] private EventController eventController;
     private Transform grabHand;
-
     private bool isLocked;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        isLocked = false;
-        eventController.OnDoorUnlock += OnDoorUnlock;
-        eventController.OnDoorLock += OnDoorLock;
+        base.OnEnable();
+        isLocked = true;
     }
-
 
     protected virtual void Update()
     {
@@ -28,8 +23,11 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
-        base.OnSelectEntered(args);
-        grabHand = args.interactorObject.transform;
+        if(!isLocked)
+        {
+            base.OnSelectEntered(args);
+            grabHand = args.interactorObject.transform;
+        }
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args)
@@ -38,18 +36,15 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
         grabHand = null;
     }
 
-    private void OnDoorUnlock()
+
+    protected void OnDoorUnlock()
     {
         isLocked = false;
     }
-    private void OnDoorLock()
+    protected void OnDoorLock()
     {
         isLocked = true;
     }
 
-    private void OnDisable()
-    {
-        eventController.OnDoorUnlock -= OnDoorUnlock;
-        eventController.OnDoorLock -= OnDoorLock;
-    }
+
 }

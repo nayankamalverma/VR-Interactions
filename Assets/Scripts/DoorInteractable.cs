@@ -1,10 +1,19 @@
 using Assets.Scripts;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DoorInteractable : SimpleHindgeInteractable
 {
+
+    [SerializeField] private EventController eventController;
     [SerializeField] private Transform dooTransform;
+
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        eventController.DoorUnlockAction += OnDoorUnlock;
+        eventController.DoorLockAction += OnDoorLock;
+    }
 
     protected override void Update()
     {
@@ -14,5 +23,11 @@ public class DoorInteractable : SimpleHindgeInteractable
             dooTransform.localEulerAngles.z);
     }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        eventController.DoorUnlockAction -= OnDoorUnlock;
+        eventController.DoorLockAction -= OnDoorLock;
+    }
 
 }

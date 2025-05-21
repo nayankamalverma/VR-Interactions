@@ -5,7 +5,10 @@ namespace Assets.Scripts
 {
     public class EventController : MonoBehaviour
     {
-        public UnityAction OnDoorUnlock;
-        public UnityAction OnDoorLock;
+        public UnityAction DoorUnlockAction;
+        public UnityAction DoorLockAction;
+
+        public void UnlockDoor() => DoorUnlockAction?.Invoke();
+        public void LockDoor() => DoorLockAction?.Invoke();
     }
 }

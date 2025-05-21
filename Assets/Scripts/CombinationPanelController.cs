@@ -2,7 +2,6 @@ using System;
 using Assets.Scripts;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -65,7 +64,7 @@ public class CombinationPanelController : MonoBehaviour
         if (!isLocked)
         {
             isLocked = true;
-            eventController.OnDoorLock.Invoke();
+            eventController.LockDoor();
             lockedPanel.color = Color.red;
             infoText.text = startingText;
             DisableLockAndResetButton();
@@ -129,7 +128,7 @@ public class CombinationPanelController : MonoBehaviour
     private void RightInput()
     {
         isLocked = false;
-        eventController.OnDoorUnlock!.Invoke();
+        eventController.UnlockDoor();
         lockedPanel.color = Color.green;
         lockedText.text = unlockedText;
         DisableNumericalInput();
