@@ -4,9 +4,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class SimpleHindgeInteractable : XRSimpleInteractable
+public abstract class SimpleHindgeInteractable : XRSimpleInteractable
 {
-    [SerializeField] private Vector3 positionLimits; 
+    [SerializeField] private Vector3 positionLimits;
+
     private Collider hingeCollider;
     private Vector3 hingePostion;
     private Rigidbody rb;
@@ -20,7 +21,7 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
         hingeCollider = GetComponent<Collider>();
     }
 
-    protected virtual void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
         isLocked = true;
@@ -36,7 +37,8 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
-        if(!isLocked)
+        Debug.Log("enter");
+        if (!isLocked)
         {
             base.OnSelectEntered(args);
             grabHand = args.interactorObject.transform;
@@ -48,6 +50,8 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
         base.OnSelectExited(args);
         grabHand = null;
         ChangeLayerMask(grabLayer);
+        ResetHinge();
+
     }
 
     private void TrackHand()
@@ -70,6 +74,7 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
         ChangeLayerMask(defaultLayer);
     }
 
+    protected abstract void ResetHinge();
 
     protected void OnDoorUnlock()
     {
@@ -79,10 +84,8 @@ public class SimpleHindgeInteractable : XRSimpleInteractable
     {
         isLocked = true;
     }
-
     private void ChangeLayerMask(string layerMask)
     {
         interactionLayers = InteractionLayerMask.GetMask(layerMask);
     }
-
 }
