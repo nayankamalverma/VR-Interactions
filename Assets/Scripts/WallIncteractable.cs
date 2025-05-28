@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+
 public class WallIncteractable : XRSimpleInteractable
 {
     [SerializeField] private int columns;
@@ -11,6 +12,10 @@ public class WallIncteractable : XRSimpleInteractable
     [SerializeField] int socketPosistion;
     [SerializeField] private GameObject[] wallCubes;
     [SerializeField] private float cubeSpacing = 0.005f;
+
+    [SerializeField] bool buildWall;
+    [SerializeField] bool deleteWall;
+    [SerializeField] bool destroyWall;
 
     private Vector3 cubeSize;
     private Vector3 spawnPosition;
