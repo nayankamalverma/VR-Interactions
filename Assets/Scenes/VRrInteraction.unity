@@ -13486,7 +13486,6 @@ Transform:
   - {fileID: 1863635812}
   - {fileID: 1908437705}
   - {fileID: 1868549136}
-  - {fileID: 1028219154}
   m_Father: {fileID: 123386131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &817380316
@@ -17623,11 +17622,11 @@ Transform:
   m_GameObject: {fileID: 1028219153}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.9255, y: 23.7347, z: 1.37}
-  m_LocalScale: {x: 0.35021102, y: 1, z: 0.1274505}
+  m_LocalPosition: {x: -1.2290906, y: 0, z: -5.669784}
+  m_LocalScale: {x: 0.77809304, y: 1, z: 0.16127564}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 811980279}
+  m_Father: {fileID: 1868549136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1028219155
 MonoBehaviour:
@@ -20645,7 +20644,7 @@ Transform:
   m_GameObject: {fileID: 1176604705}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0.5, z: -2.06}
+  m_LocalPosition: {x: -2.03, y: 0.5, z: -4.042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20761,17 +20760,17 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  columns: 2
+  columns: 11
   rows: 4
   wallCubePrefab: {fileID: 9211918856854256467, guid: bc60151d75b19dd49b9d43e3c165c444, type: 3}
   socketWallPrefab: {fileID: 6019639314278551734, guid: 9ed1ca0a8dda64e4192788decbbea05e, type: 3}
-  wallSocket: {fileID: 0}
+  generatedColumns: []
   socketPosistion: 1
-  wallCubes: []
   cubeSpacing: 0.005
   buildWall: 0
   deleteWall: 0
   destroyWall: 0
+  destroyWallPower: 2000
 --- !u!1001 &1180745257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31035,8 +31034,8 @@ Transform:
   m_GameObject: {fileID: 1684657909}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.8293, y: 23.7347, z: 17.0825}
-  m_LocalScale: {x: 0.5309651, y: 1, z: 1.4684783}
+  m_LocalPosition: {x: 3.8293, y: 23.7347, z: 17.37}
+  m_LocalScale: {x: 0.5309651, y: 1, z: 1.410914}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 811980279}
@@ -33361,7 +33360,7 @@ GameObject:
   - component: {fileID: 1868549138}
   - component: {fileID: 1868549137}
   m_Layer: 0
-  m_Name: Teleportation Area (1)
+  m_Name: BehindWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33376,10 +33375,11 @@ Transform:
   m_GameObject: {fileID: 1868549135}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4787, y: 23.7347, z: 5.8503}
-  m_LocalScale: {x: 0.45008892, y: 1, z: 0.7902651}
+  m_LocalPosition: {x: 3.4787, y: 23.7347, z: 5.6438}
+  m_LocalScale: {x: 0.45008892, y: 1, z: 0.75831807}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1028219154}
   m_Father: {fileID: 811980279}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1868549137
